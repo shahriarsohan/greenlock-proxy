@@ -5,17 +5,20 @@ const http01 = require('le-challenge-fs').create({ webrootPath: '/tmp/acme-chall
 const S3 = { bucketName: 'some-fantastic-private-bucket' }
 const store = require('le-store-s3').create({ S3 })
 
-const greenlock = require('greenlock-express').create({
+const greenlock = require('greenlock-express').init({
+  packageRoot: __dirname,
   server: 'https://acme-v02.api.letsencrypt.org/directory',
   version: 'draft-11',
   configDir: path.join(__dirname, 'acme'),
   approveDomains,
-  app: require('../../app.js'),
+  app: require('./app.js'),
   communityMember: true,
   store,
   debug: process.env.NODE_ENV === 'development',
   renewBy: 10 * 24 * 60 * 60 * 1000,
-  renewWithin: 14 * 24 * 60 * 60 * 1000
+  renewWithin: 14 * 24 * 60 * 60 * 1000,
+  maintainerEmail: "jon@example.com",
+  cluster: false
 })
 
 function approveDomains (opts, certs, cb) {
@@ -48,4 +51,4 @@ function checkDomain (domains, cb) {
   }
 }
 
-greenlock.listen(80, 443)
+// greenlock.listen(80, 443)

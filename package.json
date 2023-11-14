@@ -12,6 +12,7 @@
   "dependencies": {
     "axios": "^1.6.1",
     "express": "^4.18.2",
+    "greenlock-express": "^4.0.3",
     "http-proxy-middleware": "^2.0.6",
     "le-challenge-fs": "^2.0.9",
     "le-store-s3": "^1.0.4"
